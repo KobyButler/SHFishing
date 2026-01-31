@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800" role="img" aria-label="Rainy lake">
+  <defs>
+    <linearGradient id="bg" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0%" stop-color="#3A4B5C" />
+      <stop offset="100%" stop-color="#1E2C39" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="800" fill="url(#bg)" />
+  <path d="M0 520 C200 480, 400 560, 600 520 C800 480, 1000 560, 1200 520" fill="none" stroke="#4E6E82" stroke-width="20" opacity="0.8" />
+  <path d="M0 620 C200 580, 400 660, 600 620 C800 580, 1000 660, 1200 620" fill="none" stroke="#5C7E92" stroke-width="18" opacity="0.6" />
+  <g stroke="#B8C7D6" stroke-width="6" opacity="0.6">
+    <line x1="200" y1="100" x2="150" y2="180" />
+    <line x1="350" y1="80" x2="300" y2="160" />
+    <line x1="520" y1="120" x2="480" y2="200" />
+    <line x1="690" y1="90" x2="640" y2="170" />
+    <line x1="870" y1="110" x2="830" y2="190" />
+    <line x1="1030" y1="70" x2="980" y2="150" />
+  </g>
+</svg>

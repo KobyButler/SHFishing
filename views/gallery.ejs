@@ -1,0 +1,28 @@
+<%- include('partials/head') %>
+<%- include('partials/header') %>
+
+<section class="section">
+  <div class="container">
+    <h2>Bragging Wall</h2>
+    <p class="lead">Moments from recent charters and proud anglers. Want your photo here? Ask the crew to capture your catch.</p>
+    <div class="gallery-grid">
+      <% images.forEach((img) => { %>
+        <div class="gallery-item" data-lightbox="/uploads/gallery/<%= img.filename %>">
+          <img src="/uploads/gallery/<%= img.filename %>" alt="<%= img.caption || 'Charter memory' %>" loading="lazy" />
+          <% if (img.caption) { %>
+            <span><%= img.caption %></span>
+          <% } %>
+        </div>
+      <% }) %>
+    </div>
+    <% if (images.length === 0) { %>
+      <div class="card" style="margin-top: 20px;">Gallery photos are added from the admin dashboard.</div>
+    <% } %>
+  </div>
+</section>
+
+<div class="lightbox">
+  <img alt="Expanded gallery" />
+</div>
+
+<%- include('partials/footer') %>

@@ -1,0 +1,31 @@
+<%- include('partials/head') %>
+<%- include('partials/header') %>
+
+<section class="section">
+  <div class="container">
+    <h2>Privacy Policy</h2>
+    <p class="lead">Effective Date: <%= settings.policyEffectiveDate %></p>
+
+    <div class="card">
+      <h3>Information We Collect</h3>
+      <p>We collect information you provide when you request a trip, including your name, email, phone number, and trip details. We also collect basic analytics data if tracking is enabled in our settings.</p>
+
+      <h3>How We Use Your Information</h3>
+      <p>Your information is used to confirm availability, coordinate trip details, and provide customer support. We may send follow-up messages related to your request.</p>
+
+      <h3>Sharing</h3>
+      <p>We do not sell your personal information. We only share information with service providers needed to operate the site (such as email delivery or payment processors).</p>
+
+      <h3>Cookies</h3>
+      <p>We use cookies for basic site functionality, session management, and optional analytics. You can disable cookies in your browser settings.</p>
+
+      <h3>Security</h3>
+      <p>We use reasonable safeguards to protect your data, including secure storage and access controls. No online system is 100% secure.</p>
+
+      <h3>Contact</h3>
+      <p>If you have questions, contact us at <%= settings.email %>.</p>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

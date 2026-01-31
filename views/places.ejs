@@ -1,0 +1,43 @@
+<%- include('partials/head') %>
+<%- include('partials/header') %>
+
+<section class="section">
+  <div class="container">
+    <h2>Places to Stay and Eat</h2>
+    <p class="lead">Local favorites near the marina. Update these recommendations anytime in the admin dashboard.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <h3>Places to Stay</h3>
+        <% lodgingList.forEach((place) => { %>
+          <div style="margin-bottom:12px;">
+            <strong><%= place.name %></strong>
+            <p><%= place.description %></p>
+            <a class="button secondary" href="<%= place.url %>" target="_blank" rel="noopener">Go to Site</a>
+          </div>
+        <% }) %>
+      </div>
+      <div class="card">
+        <h3>Places to Eat</h3>
+        <% foodList.forEach((place) => { %>
+          <div style="margin-bottom:12px;">
+            <strong><%= place.name %></strong>
+            <p><%= place.description %></p>
+            <a class="button secondary" href="<%= place.url %>" target="_blank" rel="noopener">Go to Site</a>
+          </div>
+        <% }) %>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top: 24px;">
+      <h3>Dispersed Camping</h3>
+      <ul>
+        <% campingList.forEach((item) => { %>
+          <li><%= item %></li>
+        <% }) %>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

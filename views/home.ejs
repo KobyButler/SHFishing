@@ -1,0 +1,116 @@
+<%- include('partials/head') %>
+<%- include('partials/header') %>
+
+<section class="hero">
+  <div class="container">
+    <div class="hero-card">
+      <h1>Plan a fishing charter built around your perfect day.</h1>
+      <p>Drake's Charters delivers guided lake trips with premium gear, clear instruction, and a focus on memorable catches. Pick your package and request availability in minutes.</p>
+      <div>
+        <a class="button" href="/book">Book Your Trip</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <h2>About Us</h2>
+    <p class="lead">We are a locally owned charter service built for anglers who want an organized, relaxed, and high-performing day on the water. From first-timers to experienced fishermen, we tailor each trip to the season, the conditions, and your goals.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container guide">
+    <div class="guide-photo">Guide Photo</div>
+    <div>
+      <h2>About Your Guide</h2>
+      <p>Captain Drake is a lifelong angler with more than a decade of guiding experience. Expect clear coaching, patient instruction, and a charter that feels both adventurous and professional. Every trip is organized for comfort, safety, and big fish energy.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <h2>Our Clients Say</h2>
+    <div class="carousel" data-carousel>
+      <div class="carousel-track">
+        <% testimonials.forEach((t) => { %>
+          <div class="testimonial card">
+            <p>"<%= t.quote %>"</p>
+            <strong><%= t.name %></strong>
+          </div>
+        <% }) %>
+      </div>
+      <div class="carousel-controls">
+        <button class="button secondary" type="button" data-prev>Previous</button>
+        <button class="button secondary" type="button" data-next>Next</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <h2>Trip Highlights</h2>
+    <div class="gallery-grid">
+      <% if (highlights.length === 0) { %>
+        <div class="card">New catches coming soon.</div>
+      <% } %>
+      <% highlights.forEach((img) => { %>
+        <div class="gallery-item" data-lightbox="/uploads/gallery/<%= img.filename %>">
+          <img src="/uploads/gallery/<%= img.filename %>" alt="<%= img.caption || 'Charter highlight' %>" loading="lazy" />
+          <% if (img.caption) { %>
+            <span><%= img.caption %></span>
+          <% } %>
+        </div>
+      <% }) %>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <h2>Get in Touch</h2>
+    <p class="lead">Call or email us anytime. We'll help you plan the right trip and confirm details fast.</p>
+    <div class="card-grid">
+      <div class="card">
+        <h3>Contact</h3>
+        <p><strong>Phone:</strong> <%= settings.phone %></p>
+        <p><strong>Email:</strong> <%= settings.email %></p>
+        <p><strong>Marina:</strong> <%= settings.address %></p>
+      </div>
+      <div class="card">
+        <h3>Send a Message</h3>
+        <div data-contact-success></div>
+        <form method="post" action="/contact">
+          <input type="hidden" name="csrf" value="<%= csrfToken %>" />
+          <input type="text" name="company" style="display:none" tabindex="-1" autocomplete="off" />
+          <div class="form-group">
+            <label for="firstName">First Name</label>
+            <input id="firstName" name="firstName" required />
+          </div>
+          <div class="form-group">
+            <label for="lastName">Last Name</label>
+            <input id="lastName" name="lastName" required />
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input id="email" type="email" name="email" required />
+          </div>
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" required></textarea>
+          </div>
+          <button class="button" type="submit">Send Message</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="lightbox">
+  <img alt="Expanded gallery" />
+</div>
+
+<%- include('partials/footer') %>

@@ -1,0 +1,96 @@
+<%- include('partials/head') %>
+<%- include('partials/header') %>
+
+<section class="section">
+  <div class="container">
+    <div style="display:flex; justify-content:space-between; align-items:center; gap:12px;">
+      <h2>Member Dashboard</h2>
+      <a class="button secondary" href="/member/logout">Log Out</a>
+    </div>
+    <p class="lead">Welcome back, <%= member.name || member.email %>.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <h3>Saved Trips</h3>
+        <% if (savedTrips.length === 0) { %>
+          <p>No trips saved yet. Browse packages and save your favorites.</p>
+        <% } %>
+        <% savedTrips.forEach((trip) => { %>
+          <div style="margin-bottom:12px;">
+            <strong><%= trip.name %></strong>
+            <p><%= trip.description %></p>
+            <form method="post" action="/member/remove/<%= trip.saved_id %>">
+              <input type="hidden" name="csrf" value="<%= csrfToken %>" />
+              <button class="button secondary" type="submit">Remove</button>
+            </form>
+          </div>
+        <% }) %>
+      </div>
+
+      <div class="card">
+        <h3>Booking History</h3>
+        <% if (bookingHistory.length === 0) { %>
+          <p>No bookings linked to your account yet.</p>
+        <% } %>
+        <% bookingHistory.forEach((booking) => { %>
+          <div style="margin-bottom:12px;">
+            <strong><%= booking.service_name %></strong>
+            <p><%= booking.date %> at <%= booking.time %> | Status: <%= booking.status %></p>
+            <% if (booking.payment) { %>
+              <p>Payment: <%= booking.payment.status %> (<%= booking.payment.currency.toUpperCase() %> <%= booking.payment.amount %>)</p>
+            <% } else { %>
+              <p>Payment: not started</p>
+            <% } %>
+            <% if (paymentsEnabled && (!booking.payment || booking.payment.status !== 'paid')) { %>
+              <form method="post" action="/payments/checkout" style="margin-top:8px;">
+                <input type="hidden" name="csrf" value="<%= csrfToken %>" />
+                <input type="hidden" name="bookingId" value="<%= booking.id %>" />
+                <input type="hidden" name="mode" value="<%= settings.paymentMode %>" />
+                <button class="button secondary" type="submit">Pay <%= settings.paymentMode === 'full' ? 'Full' : 'Deposit' %></button>
+              </form>
+            <% } %>
+          </div>
+        <% }) %>
+      </div>
+
+      <div class="card">
+        <h3>Profile & Preferences</h3>
+        <p><strong>Email:</strong> <%= member.email %></p>
+        <% if (member.name) { %>
+          <p><strong>Name:</strong> <%= member.name %></p>
+        <% } %>
+        <p>Preferred targets, gear notes, and trip preferences will appear here.</p>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:24px;">
+      <h3>Payment Details</h3>
+      <% if (setupStatus === 'success') { %>
+        <div class="notice">Payment method added successfully.</div>
+      <% } %>
+      <% if (setupStatus === 'cancel') { %>
+        <div class="notice">Payment method setup canceled.</div>
+      <% } %>
+      <p>Manage your payment methods securely through our billing portal.</p>
+      <% if (member.stripe_default_payment_method) { %>
+        <p>Default payment method: <strong>On file</strong></p>
+      <% } else { %>
+        <p>Default payment method: <strong>Not set</strong></p>
+      <% } %>
+      <% if (paymentsEnabled) { %>
+        <form method="post" action="/member/billing-portal">
+          <input type="hidden" name="csrf" value="<%= csrfToken %>" />
+          <button class="button secondary" type="submit">Manage Payment Methods</button>
+        </form>
+        <form method="post" action="/payments/setup" style="margin-top:10px;">
+          <input type="hidden" name="csrf" value="<%= csrfToken %>" />
+          <button class="button secondary" type="submit">Set Default Card</button>
+        </form>
+      <% } else { %>
+        <button class="button secondary" type="button" disabled>Payments Not Enabled</button>
+      <% } %>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

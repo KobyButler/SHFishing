@@ -1,0 +1,48 @@
+<header>
+  <div class="container navbar">
+    <a class="logo" href="/">
+      <div><%= settings.businessName %></div>
+      <span>Guided Trips</span>
+    </a>
+
+    <nav class="nav-links" aria-label="Primary">
+      <a href="/" class="<%= currentPath === '/' ? 'active' : '' %>">Home</a>
+      <a href="/gallery" class="<%= currentPath === '/gallery' ? 'active' : '' %>">Gallery</a>
+      <a href="/book" class="<%= currentPath.startsWith('/book') ? 'active' : '' %>">Book Your Trip</a>
+      <a href="/know-before-you-go" class="<%= currentPath === '/know-before-you-go' ? 'active' : '' %>">Know Before You Go</a>
+      <a href="/places" class="<%= currentPath === '/places' ? 'active' : '' %>">Places to Stay and Eat</a>
+      <div class="dropdown">
+        <button class="nav-link-button" type="button">More</button>
+        <div class="dropdown-content">
+          <a href="/policies/refund">Refund Policy</a>
+          <a href="/policies/privacy">Privacy Policy</a><br />
+          <a href="/policies/terms">Terms &amp; Conditions</a><br />
+          <a href="/waiver.pdf" download>Download Waiver</a>
+        </div>
+      </div>
+    </nav>
+
+    <div class="nav-actions">
+      <a class="icon-button" href="<%= settings.facebook %>" target="_blank" rel="noopener" aria-label="Facebook">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M13 9h3V6h-3c-2.2 0-4 1.8-4 4v2H7v3h2v7h3v-7h3l1-3h-4v-2c0-.6.4-1 1-1z" />
+        </svg>
+      </a>
+      <a class="icon-button" href="<%= settings.instagram %>" target="_blank" rel="noopener" aria-label="Instagram">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M12 7a5 5 0 100 10 5 5 0 000-10zm0 8a3 3 0 110-6 3 3 0 010 6zm6.5-11A1.5 1.5 0 1017 5.5 1.5 1.5 0 0018.5 4zm-3.4 16H8.9A4.9 4.9 0 014 15.1V8.9A4.9 4.9 0 018.9 4h6.2A4.9 4.9 0 0120 8.9v6.2a4.9 4.9 0 01-4.9 4.9zM18 8.9A3.1 3.1 0 0015.1 6H8.9A3.1 3.1 0 006 8.9v6.2A3.1 3.1 0 008.9 18h6.2a3.1 3.1 0 003.1-3.1z" />
+        </svg>
+      </a>
+      <% if (member) { %>
+        <a href="/member" class="button secondary">Member Dashboard</a>
+      <% } else { %>
+        <a href="/member/login" class="button secondary">Member Login</a>
+      <% } %>
+      <button class="hamburger" aria-label="Open navigation" type="button">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </div>
+</header>

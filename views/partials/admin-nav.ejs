@@ -1,0 +1,14 @@
+<div class="admin-layout">
+  <aside class="admin-nav">
+    <h3>Admin</h3>
+    <a href="/admin" class="<%= currentPath === '/admin' ? 'active' : '' %>">Dashboard</a>
+    <a href="/admin/services" class="<%= currentPath === '/admin/services' ? 'active' : '' %>">Services</a>
+    <a href="/admin/availability" class="<%= currentPath === '/admin/availability' ? 'active' : '' %>">Availability</a>
+    <a href="/admin/bookings" class="<%= currentPath === '/admin/bookings' ? 'active' : '' %>">Booking Requests</a>
+    <a href="/admin/gallery" class="<%= currentPath === '/admin/gallery' ? 'active' : '' %>">Gallery</a>
+    <a href="/admin/settings" class="<%= currentPath === '/admin/settings' ? 'active' : '' %>">Site Settings</a>
+    <form method="post" action="/admin/logout">
+      <button class="button secondary" type="submit">Log Out</button>
+    </form>
+  </aside>
+  <div>

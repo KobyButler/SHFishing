@@ -1,0 +1,58 @@
+<%- include('partials/head') %>
+<%- include('partials/header') %>
+
+<section class="section">
+  <div class="container">
+    <h2>Schedule Your Trip</h2>
+    <p class="lead">Request availability for <strong><%= service.name %></strong>. Select a date and start time, then complete the request form.</p>
+    <% if (settings.paymentsEnabled === 'true') { %>
+      <div class="notice">Payments are enabled. You will receive a secure payment link after your request is confirmed.</div>
+    <% } %>
+    <div class="card-grid">
+      <div class="calendar" data-calendar data-service-id="<%= service.id %>">
+        <div style="display:flex; justify-content:space-between; align-items:center; gap:12px;">
+          <button class="button secondary" type="button" data-prev-month>Previous</button>
+          <strong data-month-label></strong>
+          <button class="button secondary" type="button" data-next-month>Next</button>
+        </div>
+        <div class="calendar-grid"></div>
+        <div style="margin-top:16px;">
+          <strong>Available start times</strong>
+          <div class="timeslot-list" data-timeslots></div>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Request Availability</h3>
+        <form method="post" action="/book/<%= service.id %>/request" data-booking-form>
+          <input type="hidden" name="csrf" value="<%= csrfToken %>" />
+          <input type="text" name="company" style="display:none" tabindex="-1" autocomplete="off" />
+          <input type="hidden" name="date" required />
+          <input type="hidden" name="time" required />
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input id="name" name="name" required />
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" required />
+          </div>
+          <div class="form-group">
+            <label for="phone">Phone</label>
+            <input id="phone" name="phone" required />
+          </div>
+          <div class="form-group">
+            <label for="guests">Number of Guests</label>
+            <input id="guests" name="guests" type="number" min="1" max="12" required />
+          </div>
+          <div class="form-group">
+            <label for="notes">Notes</label>
+            <textarea id="notes" name="notes" placeholder="What do you want to target? Any special requests?"></textarea>
+          </div>
+          <button class="button" type="submit">Request Availability</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

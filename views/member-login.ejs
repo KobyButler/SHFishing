@@ -1,0 +1,29 @@
+<%- include('partials/head') %>
+<%- include('partials/header') %>
+
+<section class="section">
+  <div class="container member-auth">
+    <div class="card">
+      <h2>Member Access</h2>
+      <p class="lead">Save your favorite trips, manage bookings, and keep your payment details in one place.</p>
+      <% if (!authEnabled) { %>
+        <div class="notice">SSO is not configured yet. Add SUPABASE_URL and SUPABASE_ANON_KEY to enable sign-in.</div>
+      <% } %>
+      <div class="auth-actions">
+        <% if (authEnabled) { %>
+          <a class="button secondary" href="/auth/google">Continue with Google</a>
+          <a class="button" href="/auth/facebook">Continue with Facebook</a>
+          <a class="button secondary" href="/auth/apple">Continue with Apple</a>
+        <% } else { %>
+          <button class="button secondary" type="button" disabled>Continue with Google</button>
+          <button class="button" type="button" disabled>Continue with Facebook</button>
+          <button class="button secondary" type="button" disabled>Continue with Apple</button>
+        <% } %>
+      </div>
+      <div class="auth-divider"><span>or</span></div>
+      <p>Prefer email? We'll add email sign-in when you enable it in Supabase.</p>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

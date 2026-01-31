@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800" role="img" aria-label="Boat and ripples">
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#223B4B" />
+      <stop offset="100%" stop-color="#77A6B6" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="800" fill="url(#bg)" />
+  <circle cx="900" cy="140" r="60" fill="#FCE7A8" opacity="0.8" />
+  <path d="M240 460 L540 460 L500 520 L280 520 Z" fill="#F4F1EA" />
+  <rect x="360" y="390" width="120" height="60" fill="#E3DCCF" />
+  <path d="M0 620 C180 580, 360 660, 540 620 C720 580, 900 660, 1200 620" fill="none" stroke="#9CC3D5" stroke-width="14" opacity="0.6" />
+  <path d="M0 700 C180 660, 360 740, 540 700 C720 660, 900 740, 1200 700" fill="none" stroke="#6F9AAE" stroke-width="12" opacity="0.6" />
+</svg>

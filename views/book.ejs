@@ -1,0 +1,28 @@
+<%- include('partials/head') %>
+<%- include('partials/header') %>
+
+<section class="section">
+  <div class="container">
+    <h2>Book Your Trip</h2>
+    <p class="lead">Choose a charter package and request availability. We'll confirm the time and details as quickly as possible.</p>
+    <div class="card-grid">
+      <% services.forEach((service) => { %>
+        <div class="card">
+          <h3><%= service.name %></h3>
+          <p><span class="badge"><%= service.duration_hours %> hours</span></p>
+          <p><%= service.description %></p>
+          <p><strong>$<%= service.price %></strong></p>
+          <a class="button" href="/book/<%= service.id %>">Request Availability</a>
+          <% if (member) { %>
+            <form method="post" action="/member/save/<%= service.id %>" style="margin-top:10px;">
+              <input type="hidden" name="csrf" value="<%= csrfToken %>" />
+              <button class="button secondary" type="submit">Save Trip</button>
+            </form>
+          <% } %>
+        </div>
+      <% }) %>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

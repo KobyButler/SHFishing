@@ -1,0 +1,23 @@
+<%- include('partials/head') %>
+
+<section class="section">
+  <div class="container">
+    <h2>Admin Dashboard</h2>
+    <%- include('partials/admin-nav') %>
+      <div class="card">
+        <h3>Recent Booking Requests</h3>
+        <% if (bookings.length === 0) { %>
+          <p>No booking requests yet.</p>
+        <% } %>
+        <% bookings.forEach((b) => { %>
+          <div style="margin-bottom:12px;">
+            <strong>#<%= b.id %></strong> - <%= b.name %> (<%= b.date %> at <%= b.time %>)
+            <span class="badge"><%= b.status %></span>
+          </div>
+        <% }) %>
+      </div>
+    <%- include('partials/admin-nav-end') %>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

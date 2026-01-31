@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800" role="img" aria-label="Catch moment">
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#F1B87D" />
+      <stop offset="100%" stop-color="#457C9C" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="800" fill="url(#bg)" />
+  <circle cx="260" cy="240" r="110" fill="#FCE7A8" opacity="0.85" />
+  <rect x="620" y="430" width="220" height="120" fill="#F1E2C5" />
+  <path d="M600 520 C520 520, 480 580, 520 620 C560 660, 660 620, 640 560 C630 530, 620 520, 600 520" fill="#F4D35E" />
+  <path d="M0 660 C200 620, 400 700, 600 660 C800 620, 1000 700, 1200 660" fill="none" stroke="#2E5C7A" stroke-width="22" opacity="0.6" />
+</svg>

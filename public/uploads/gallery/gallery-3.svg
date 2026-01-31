@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800" role="img" aria-label="Fishing rod silhouette">
+  <defs>
+    <linearGradient id="bg" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0%" stop-color="#0F2B3A" />
+      <stop offset="100%" stop-color="#2F5F78" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="800" fill="url(#bg)" />
+  <path d="M80 620 C220 460, 460 360, 820 300" fill="none" stroke="#F5E9C5" stroke-width="14" />
+  <circle cx="860" cy="290" r="12" fill="#F5E9C5" />
+  <path d="M860 302 C860 380, 820 460, 760 520" fill="none" stroke="#F5E9C5" stroke-width="4" />
+  <path d="M740 520 C700 520, 680 560, 720 580 C760 600, 820 560, 780 520" fill="#F4B183" />
+  <rect y="620" width="1200" height="180" fill="#1C3E52" />
+</svg>

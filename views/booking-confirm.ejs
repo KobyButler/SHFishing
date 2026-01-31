@@ -1,0 +1,28 @@
+<%- include('partials/head') %>
+<%- include('partials/header') %>
+
+<section class="section">
+  <div class="container">
+    <div class="card">
+      <% if (spam) { %>
+        <h2>Thanks for reaching out</h2>
+        <p>Your request has been received.</p>
+      <% } else { %>
+        <h2>Request received</h2>
+        <p>Thanks for requesting <strong><%= service.name %></strong>. Your request ID is <strong>#<%= bookingId %></strong>. We'll confirm availability shortly.</p>
+        <p>If you need to update anything, contact us at <%= settings.phone %> or <%= settings.email %>.</p>
+        <% if (paymentsReady) { %>
+          <form method="post" action="/payments/checkout" style="margin-top:16px;">
+            <input type="hidden" name="csrf" value="<%= csrfToken %>" />
+            <input type="hidden" name="bookingId" value="<%= bookingId %>" />
+            <input type="hidden" name="mode" value="<%= settings.paymentMode %>" />
+            <button class="button" type="submit">Pay <%= settings.paymentMode === 'full' ? 'Full Amount' : 'Deposit' %></button>
+          </form>
+        <% } %>
+      <% } %>
+      <a class="button" href="/">Back to Home</a>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

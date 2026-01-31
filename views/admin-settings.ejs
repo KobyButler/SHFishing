@@ -1,0 +1,134 @@
+<%- include('partials/head') %>
+
+<section class="section">
+  <div class="container">
+    <h2>Site Settings</h2>
+    <%- include('partials/admin-nav') %>
+      <div class="notice">Have an attorney review the policy and waiver text.</div>
+      <% if (saved) { %>
+        <div class="notice" style="margin-top:12px;">Settings saved successfully.</div>
+      <% } %>
+      <div class="card" style="margin-top:16px;">
+        <form method="post" action="/admin/settings" data-settings-form>
+          <input type="hidden" name="csrf" value="<%= csrfToken %>" />
+          <div class="form-group">
+            <label>Business Name</label>
+            <input name="businessName" value="<%= settings.businessName %>" />
+          </div>
+          <div class="form-group">
+            <label>Domain</label>
+            <input name="domain" value="<%= settings.domain %>" />
+          </div>
+          <div class="form-group">
+            <label>Phone</label>
+            <input name="phone" value="<%= settings.phone %>" />
+          </div>
+          <div class="form-group">
+            <label>Email</label>
+            <input name="email" value="<%= settings.email %>" />
+          </div>
+          <div class="form-group">
+            <label>Facebook URL</label>
+            <input name="facebook" value="<%= settings.facebook %>" />
+          </div>
+          <div class="form-group">
+            <label>Instagram URL</label>
+            <input name="instagram" value="<%= settings.instagram %>" />
+          </div>
+          <div class="form-group">
+            <label>Marina Address</label>
+            <input name="address" value="<%= settings.address %>" />
+          </div>
+          <div class="form-group">
+            <label>Fishing License URL</label>
+            <input name="licenseUrl" value="<%= settings.licenseUrl %>" />
+          </div>
+          <div class="form-group">
+            <label>Policy Effective Date</label>
+            <input name="policyEffectiveDate" value="<%= settings.policyEffectiveDate %>" />
+          </div>
+          <div class="form-group">
+            <label>Waiver Effective Date</label>
+            <input name="waiverEffectiveDate" value="<%= settings.waiverEffectiveDate %>" />
+          </div>
+          <div class="form-group">
+            <label>Payments Enabled (true/false)</label>
+            <input name="paymentsEnabled" value="<%= settings.paymentsEnabled %>" />
+          </div>
+          <div class="form-group">
+            <label>Payment Mode</label>
+            <select name="paymentMode">
+              <option value="deposit" <%= settings.paymentMode === 'deposit' ? 'selected' : '' %>>Deposit</option>
+              <option value="full" <%= settings.paymentMode === 'full' ? 'selected' : '' %>>Full Amount</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Deposit Amount (USD)</label>
+            <input name="depositAmount" value="<%= settings.depositAmount %>" />
+          </div>
+          <div class="form-group">
+            <label>Payment Currency (ISO)</label>
+            <input name="paymentCurrency" value="<%= settings.paymentCurrency %>" />
+          </div>
+          <div class="form-group">
+            <label>Analytics Enabled (true/false)</label>
+            <input name="analyticsEnabled" value="<%= settings.analyticsEnabled %>" />
+          </div>
+
+          <div class="settings-section">
+            <div style="display:flex; align-items:center; justify-content:space-between; gap:12px;">
+              <h3>Places to Stay</h3>
+              <button class="button secondary" type="button" data-add-row data-target="lodging">Add Lodging</button>
+            </div>
+            <div data-list="lodging">
+              <% lodgingList.forEach((item) => { %>
+                <div class="list-row">
+                  <input name="lodgingName" placeholder="Name" value="<%= item.name %>" />
+                  <input name="lodgingDescription" placeholder="Short description" value="<%= item.description %>" />
+                  <input name="lodgingUrl" placeholder="https://" value="<%= item.url %>" />
+                  <button class="button secondary" type="button" data-remove>Remove</button>
+                </div>
+              <% }) %>
+            </div>
+          </div>
+
+          <div class="settings-section">
+            <div style="display:flex; align-items:center; justify-content:space-between; gap:12px;">
+              <h3>Places to Eat</h3>
+              <button class="button secondary" type="button" data-add-row data-target="food">Add Restaurant</button>
+            </div>
+            <div data-list="food">
+              <% foodList.forEach((item) => { %>
+                <div class="list-row">
+                  <input name="foodName" placeholder="Name" value="<%= item.name %>" />
+                  <input name="foodDescription" placeholder="Short description" value="<%= item.description %>" />
+                  <input name="foodUrl" placeholder="https://" value="<%= item.url %>" />
+                  <button class="button secondary" type="button" data-remove>Remove</button>
+                </div>
+              <% }) %>
+            </div>
+          </div>
+
+          <div class="settings-section">
+            <div style="display:flex; align-items:center; justify-content:space-between; gap:12px;">
+              <h3>Dispersed Camping</h3>
+              <button class="button secondary" type="button" data-add-row data-target="camping">Add Spot</button>
+            </div>
+            <div data-list="camping">
+              <% campingList.forEach((item) => { %>
+                <div class="list-row compact">
+                  <input name="campingItem" placeholder="Camping location" value="<%= item %>" />
+                  <button class="button secondary" type="button" data-remove>Remove</button>
+                </div>
+              <% }) %>
+            </div>
+          </div>
+
+          <button class="button" type="submit">Save Settings</button>
+        </form>
+      </div>
+    <%- include('partials/admin-nav-end') %>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

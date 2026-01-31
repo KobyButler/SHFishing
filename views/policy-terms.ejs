@@ -1,0 +1,31 @@
+<%- include('partials/head') %>
+<%- include('partials/header') %>
+
+<section class="section">
+  <div class="container">
+    <h2>Terms &amp; Conditions</h2>
+    <p class="lead">Effective Date: <%= settings.policyEffectiveDate %></p>
+
+    <div class="card">
+      <h3>Booking and Payment</h3>
+      <p>All trips are requested online and confirmed by Drake's Charters. Payment terms, deposits, and final balances will be communicated during confirmation. If payments are enabled, transactions are processed securely.</p>
+
+      <h3>Cancellations and Refunds</h3>
+      <p>Cancellation and refund rules are outlined in our Refund Policy. By booking, you agree to those terms.</p>
+
+      <h3>Safety and Conduct</h3>
+      <p>Guests must follow all guide instructions and safety rules while on the water. Unsafe behavior may result in early termination without refund.</p>
+
+      <h3>Assumption of Risk</h3>
+      <p>Fishing charters involve inherent risks. By participating, you acknowledge and accept these risks and agree to sign the required waiver.</p>
+
+      <h3>Waiver Requirement</h3>
+      <p>All participants must sign a waiver before departure. Minors require a parent or guardian signature.</p>
+
+      <h3>Contact Information</h3>
+      <p>Questions about these terms can be sent to <%= settings.email %> or <%= settings.phone %>.</p>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

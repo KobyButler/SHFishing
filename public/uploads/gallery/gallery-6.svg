@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800" role="img" aria-label="Golden hour">
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#FCE7A8" />
+      <stop offset="60%" stop-color="#F7C77E" />
+      <stop offset="100%" stop-color="#2E5C7A" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="800" fill="url(#bg)" />
+  <circle cx="980" cy="160" r="90" fill="#FFF2C2" />
+  <path d="M0 540 C200 510, 400 580, 600 540 C800 510, 1000 580, 1200 540" fill="none" stroke="#2E5C7A" stroke-width="16" opacity="0.7" />
+  <path d="M0 640 C200 610, 400 680, 600 640 C800 610, 1000 680, 1200 640" fill="none" stroke="#23485F" stroke-width="20" opacity="0.7" />
+</svg>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title><%= pageTitle || settings.businessName %></title>
+  <meta name="description" content="<%= metaDescription || 'Guided fishing charters with modern gear and local expertise.' %>" />
+  <meta property="og:title" content="<%= pageTitle || settings.businessName %>" />
+  <meta property="og:description" content="<%= metaDescription || 'Guided fishing charters with modern gear and local expertise.' %>" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://<%= settings.domain %><%= currentPath %>" />
+  <meta property="og:image" content="https://<%= settings.domain %>/uploads/gallery/gallery-1.svg" />
+  <link rel="stylesheet" href="/styles.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='40' fill='%232f6f77'/></svg>" />
+  <% if (settings.analyticsEnabled === 'true') { %>
+    <!-- Analytics placeholder: replace with your tracking script --> 
+    <script>
+      window.analyticsEnabled = true;
+    </script>
+  <% } %>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": "<%= settings.businessName %>",
+      "url": "https://<%= settings.domain %>",
+      "telephone": "<%= settings.phone %>",
+      "email": "<%= settings.email %>",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "<%= settings.address %>"
+      },
+      "areaServed": "Local Lakes",
+      "serviceType": "Guided fishing charters"
+    }
+  </script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "serviceType": "Guided fishing charters",
+      "provider": {
+        "@type": "LocalBusiness",
+        "name": "<%= settings.businessName %>",
+        "url": "https://<%= settings.domain %>"
+      }
+    }
+  </script>
+</head>
+<body>
