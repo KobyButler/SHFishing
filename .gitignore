@@ -7,3 +7,4 @@ node_modules
 /public/uploads/gallery/*.png
 /public/uploads/gallery/*.webp
 /public/uploads/gallery/*.gif
+!/public/uploads/gallery/sh-fishing-*.jpg

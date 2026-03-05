@@ -24,7 +24,7 @@ const sendMail = async ({ to, subject, text, html }) => {
   }
   try {
     await transporter.sendMail({
-      from: process.env.MAIL_FROM || 'Drake\'s Charters <no-reply@drakescharters.com>',
+      from: process.env.MAIL_FROM || 'S&H Fishing <no-reply@shfishing.com>',
       to,
       subject,
       text,

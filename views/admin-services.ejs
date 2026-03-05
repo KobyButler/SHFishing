@@ -2,7 +2,7 @@
 
 <section class="section">
   <div class="container">
-    <h2>Services</h2>
+    <h1>Services</h1>
     <%- include('partials/admin-nav') %>
       <div class="card">
         <h3>Add Service</h3>
@@ -18,11 +18,11 @@
           </div>
           <div class="form-group">
             <label>Duration (hours)</label>
-            <input type="number" name="duration" min="1" required />
+            <input type="number" name="duration" min="0" required />
           </div>
           <div class="form-group">
             <label>Price (USD)</label>
-            <input type="number" name="price" min="1" required />
+            <input type="number" name="price" min="0" required />
           </div>
           <div class="form-group">
             <label>Start Times (comma-separated, 24h)</label>
@@ -47,11 +47,11 @@
             </div>
             <div class="form-group">
               <label>Duration (hours)</label>
-              <input type="number" name="duration" min="1" value="<%= service.duration_hours %>" required />
+              <input type="number" name="duration" min="0" value="<%= service.duration_hours %>" required />
             </div>
             <div class="form-group">
               <label>Price (USD)</label>
-              <input type="number" name="price" min="1" value="<%= service.price %>" required />
+              <input type="number" name="price" min="0" value="<%= service.price %>" required />
             </div>
             <div class="form-group">
               <label>Start Times (comma-separated)</label>

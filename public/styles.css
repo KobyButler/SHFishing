@@ -22,7 +22,18 @@
   --radius-lg: 28px;
   --radius-md: 18px;
   --radius-sm: 12px;
-  --max-width: 1180px;
+  --max-width: 1700px;
+  --content-gutter: clamp(14px, 3vw, 40px);
+  --reading-width: 68ch;
+  --reading-width-wide: 78ch;
+  --text-body: clamp(1rem, 0.22vw + 0.96rem, 1.08rem);
+  --text-lead: clamp(1.05rem, 0.45vw + 0.97rem, 1.2rem);
+  --text-h3: clamp(1.2rem, 1vw + 1rem, 1.5rem);
+  --text-h2: clamp(1.85rem, 2.35vw + 1.2rem, 2.75rem);
+  --text-h1: clamp(2.35rem, 4vw + 1.35rem, 4rem);
+  --space-flow-sm: clamp(10px, 1.2vw, 14px);
+  --space-flow-md: clamp(14px, 1.8vw, 22px);
+  --space-flow-lg: clamp(24px, 3vw, 36px);
 }
 
 * {
@@ -36,12 +47,13 @@ html {
 body {
   margin: 0;
   font-family: 'Instrument Sans', sans-serif;
+  font-size: var(--text-body);
   color: var(--ink);
   background:
     radial-gradient(circle at 12% 12%, rgba(255, 255, 255, 0.85), transparent 45%),
     radial-gradient(circle at 90% 0%, rgba(216, 236, 236, 0.75), transparent 50%),
     linear-gradient(180deg, #f8f1e7 0%, #eef6f5 45%, #f6efe4 100%);
-  line-height: 1.65;
+  line-height: 1.62;
   min-height: 100vh;
   position: relative;
   isolation: isolate;
@@ -109,8 +121,25 @@ button {
 }
 
 .container {
-  width: min(92%, var(--max-width));
+  width: min(var(--max-width), calc(100% - (var(--content-gutter) * 2)));
   margin: 0 auto;
+}
+
+h1,
+h2,
+h3 {
+  margin: 0;
+  line-height: 1.14;
+  letter-spacing: 0.01em;
+  text-wrap: balance;
+}
+
+p {
+  margin: 0;
+}
+
+p + p {
+  margin-top: 0.92em;
 }
 
 header {
@@ -127,31 +156,50 @@ header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 16px 0;
+  padding: 12px 0;
   gap: 16px;
   flex-wrap: nowrap;
   position: relative;
 }
 
 .logo {
-  font-family: 'Fraunces', serif;
-  font-size: 1.6rem;
-  letter-spacing: 0.3px;
   display: inline-flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 2px;
+  align-items: center;
+  gap: 10px;
   color: var(--sea-dark);
   min-width: 0;
 }
 
-.logo span {
+.logo img {
+  width: 72px;
+  height: 72px;
+  object-fit: contain;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: #ffffff;
+}
+
+.logo-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 0;
+}
+
+.logo-text strong {
+  font-family: 'Fraunces', serif;
+  font-size: 1.3rem;
+  letter-spacing: 0.3px;
+  line-height: 1.1;
+}
+
+.logo-text span {
   color: var(--sun-deep);
   font-size: 0.72rem;
   font-family: 'Instrument Sans', sans-serif;
   text-transform: uppercase;
   letter-spacing: 2px;
-  text-align: right;
+  text-align: left;
 }
 
 .nav-links {
@@ -179,13 +227,13 @@ header {
   border: 1px solid transparent;
   color: var(--ink-muted);
   font-weight: 600;
-  font-size: clamp(0.74rem, 0.85vw, 0.86rem);
-  padding: 6px clamp(8px, 1vw, 12px);
+  font-size: clamp(0.8rem, 0.9vw, 0.92rem);
+  padding: 8px clamp(10px, 1vw, 14px);
   border-radius: 999px;
   cursor: pointer;
   transition: background 0.2s ease, color 0.2s ease, border 0.2s ease, transform 0.2s ease;
   flex: 0 1 auto;
-  min-height: clamp(58px, 6vw, 70px);
+  min-height: clamp(42px, 4.8vw, 50px);
   white-space: nowrap;
 }
 
@@ -195,14 +243,14 @@ header {
   justify-content: center;
   font-weight: 600;
   color: var(--ink-muted);
-  font-size: clamp(0.74rem, 0.85vw, 0.86rem);
-  padding: 6px clamp(8px, 1vw, 12px);
+  font-size: clamp(0.8rem, 0.9vw, 0.92rem);
+  padding: 8px clamp(10px, 1vw, 14px);
   border-radius: 999px;
   transition: background 0.2s ease, color 0.2s ease, border 0.2s ease, transform 0.2s ease;
   border: 1px solid transparent;
   flex: 0 1 auto;
   text-align: center;
-  min-height: clamp(58px, 6vw, 70px);
+  min-height: clamp(42px, 4.8vw, 50px);
   white-space: nowrap;
 }
 
@@ -354,20 +402,20 @@ button:disabled {
 }
 
 .hero {
-  padding: 96px 0 72px;
+  padding: clamp(74px, 8vw, 104px) 0 clamp(56px, 6vw, 78px);
 }
 
 .hero-card {
   background:
     linear-gradient(120deg, rgba(12, 33, 41, 0.92), rgba(12, 33, 41, 0.4)),
-    url('/uploads/gallery/gallery-2.svg');
+    url('/uploads/gallery/sh-fishing-hero.jpg');
   background-size: cover;
   background-position: center;
   border-radius: var(--radius-lg);
-  padding: 64px;
+  padding: clamp(34px, 4.8vw, 64px);
   color: #fdf5ec;
   display: grid;
-  gap: 20px;
+  gap: clamp(12px, 1.8vw, 20px);
   box-shadow: var(--shadow-lg);
   border: 1px solid rgba(255, 255, 255, 0.2);
   position: relative;
@@ -407,19 +455,21 @@ button:disabled {
 
 .hero-card h1 {
   font-family: 'Fraunces', serif;
-  font-size: clamp(2.6rem, 4.8vw, 4.2rem);
-  margin: 0;
+  font-size: var(--text-h1);
+  max-width: 15ch;
   letter-spacing: 0.4px;
   line-height: 1.05;
 }
 
 .hero-card p {
-  max-width: 560px;
-  font-size: 1.1rem;
+  max-width: min(var(--reading-width), 100%);
+  font-size: var(--text-lead);
+  line-height: 1.58;
+  margin-bottom: 0;
 }
 
 .section {
-  padding: 80px 0;
+  padding: clamp(56px, 6.8vw, 84px) 0;
   position: relative;
   animation: rise 0.9s ease both;
 }
@@ -436,18 +486,36 @@ button:disabled {
   z-index: -1;
 }
 
-.section h2 {
+.section :is(h1, h2) {
   font-family: 'Fraunces', serif;
-  font-size: clamp(2rem, 3.4vw, 2.8rem);
-  margin-bottom: 16px;
-  letter-spacing: 0.3px;
+  font-size: var(--text-h2);
+  max-width: 18ch;
+  letter-spacing: 0.015em;
   color: var(--sea-dark);
 }
 
 .section p.lead {
-  font-size: 1.05rem;
-  max-width: 720px;
+  font-size: var(--text-lead);
+  max-width: var(--reading-width-wide);
+  line-height: 1.58;
   color: var(--ink-muted);
+  margin-bottom: 0;
+}
+
+.section .container:not(.guide) > * + * {
+  margin-top: var(--space-flow-md);
+}
+
+.section .container:not(.guide) > :is(h1, h2) + .lead {
+  margin-top: var(--space-flow-sm);
+}
+
+.section .container:not(.guide) > .lead + * {
+  margin-top: var(--space-flow-lg);
+}
+
+.section .container > .card {
+  max-width: min(100%, 980px);
 }
 
 .card-grid {
@@ -458,7 +526,7 @@ button:disabled {
 
 .card {
   background: var(--surface);
-  padding: 28px;
+  padding: clamp(22px, 2.2vw, 30px);
   border-radius: var(--radius-md);
   border: 1px solid var(--border);
   box-shadow: var(--shadow-md);
@@ -467,9 +535,36 @@ button:disabled {
 }
 
 .card h3 {
-  margin-top: 0;
+  margin-bottom: 12px;
   font-family: 'Fraunces', serif;
+  font-size: var(--text-h3);
+  line-height: 1.2;
   color: var(--sea-dark);
+}
+
+.card h2 {
+  margin-bottom: 12px;
+  font-family: 'Fraunces', serif;
+  font-size: clamp(1.55rem, 1.9vw + 1.05rem, 2.2rem);
+  line-height: 1.15;
+  color: var(--sea-dark);
+}
+
+.card p {
+  max-width: var(--reading-width);
+  line-height: 1.62;
+}
+
+.card > * + * {
+  margin-top: var(--space-flow-sm);
+}
+
+.card > :is(h2, h3) + * {
+  margin-top: 8px;
+}
+
+.card > form {
+  margin-top: var(--space-flow-md);
 }
 
 .guide {
@@ -481,18 +576,21 @@ button:disabled {
 
 .guide-photo {
   border-radius: 22px;
-  width: 260px;
-  height: 260px;
-  background: radial-gradient(circle at 25% 20%, #f6c48a, #e2a161 45%, #2f6f77 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #183238;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
+  width: min(100%, 320px);
+  height: 320px;
+  overflow: hidden;
   box-shadow: var(--shadow-md);
-  border: 4px solid rgba(255, 255, 255, 0.6);
+  border: 2px solid rgba(255, 255, 255, 0.6);
+}
+
+.guide-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.service-offers {
+  margin-top: 8px;
 }
 
 .carousel {
@@ -725,6 +823,10 @@ textarea {
   border: 1px solid var(--border);
   box-shadow: var(--shadow-sm);
   align-self: start;
+}
+
+.admin-nav h3 {
+  margin-bottom: 12px;
 }
 
 .admin-nav a {
@@ -963,9 +1065,18 @@ textarea {
 }
 
 @media (max-width: 820px) {
+  .logo img {
+    width: 60px;
+    height: 60px;
+  }
+
+  .logo-text strong {
+    font-size: 1.05rem;
+  }
+
   .nav-links {
     position: absolute;
-    top: 74px;
+    top: calc(100% + 10px);
     right: 16px;
     flex-direction: column;
     background: var(--surface-strong);

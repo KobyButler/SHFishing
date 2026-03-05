@@ -7,7 +7,7 @@ const doc = new PDFDocument({ margin: 50 });
 
 doc.pipe(fs.createWriteStream(outputPath));
 
-doc.fontSize(20).text("Drake's Charters - Release and Waiver of Liability", { align: 'center' });
+doc.fontSize(20).text('S&H Fishing - Release and Waiver of Liability', { align: 'center' });
 
 doc.moveDown();
 
@@ -23,7 +23,7 @@ doc.moveDown();
 
 doc.fontSize(12).text('Release and Waiver of Liability', { underline: true });
 
-doc.fontSize(11).text('In consideration for being allowed to participate in any activities with Drake\'s Charters, I release and forever discharge Drake\'s Charters, its owners, guides, employees, contractors, and agents from any and all claims or liabilities arising out of or related to my participation, including claims resulting from negligence, to the fullest extent permitted by law.');
+doc.fontSize(11).text('In consideration for being allowed to participate in any activities with S&H Fishing, I release and forever discharge S&H Fishing, its owners, guides, employees, contractors, and agents from any and all claims or liabilities arising out of or related to my participation, including claims resulting from negligence, to the fullest extent permitted by law.');
 
 doc.moveDown();
 
@@ -35,7 +35,7 @@ doc.moveDown();
 
 doc.fontSize(12).text('Medical Consent', { underline: true });
 
-doc.fontSize(11).text('I authorize Drake\'s Charters to obtain emergency medical treatment for me if necessary. I agree to be responsible for any medical costs incurred.');
+doc.fontSize(11).text('I authorize S&H Fishing to obtain emergency medical treatment for me if necessary. I agree to be responsible for any medical costs incurred.');
 
 doc.moveDown();
 
@@ -47,7 +47,7 @@ doc.moveDown();
 
 doc.fontSize(12).text('Photo/Video Release (Optional)', { underline: true });
 
-doc.fontSize(11).text('I grant permission for Drake\'s Charters to use photographs or video captured during the trip for marketing purposes unless I revoke consent in writing.');
+doc.fontSize(11).text('I grant permission for S&H Fishing to use photographs or video captured during the trip for marketing purposes unless I revoke consent in writing.');
 
 doc.moveDown();
 

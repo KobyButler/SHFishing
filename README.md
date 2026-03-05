@@ -1,4 +1,4 @@
-# Drake's Charters Website
+# S&H Fishing Website
 
 Production-ready fishing charter website with booking requests, admin management, and downloadable waiver.
 
@@ -29,7 +29,7 @@ SMTP_PORT=587
 SMTP_USER=your_user
 SMTP_PASS=your_pass
 SMTP_SECURE=false
-MAIL_FROM=Drake's Charters <no-reply@drakescharters.com>
+MAIL_FROM=S&H Fishing <no-reply@shfishing.com>
 
 SUPABASE_URL=https://your-project.supabase.co
 SUPABASE_ANON_KEY=your_anon_key
@@ -62,7 +62,7 @@ SQLite is stored at `db/data.sqlite` and updated on each write.
 4. Start the service with `npm start` (configure a process manager like PM2 for VPS).
 5. Ensure the server is behind HTTPS (required if enabling payments).
 
-## DNS setup for drakescharters.com
+## DNS setup for shfishing.com
 - Point an `A` record to your server IP, or
 - Use a `CNAME` to your hosting provider domain.
 - Add a `www` CNAME to the same target.

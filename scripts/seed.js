@@ -5,14 +5,15 @@ await init();
 const services = prepare('SELECT COUNT(*) as count FROM services').get().count;
 if (services === 0) {
   const insert = prepare('INSERT INTO services (name, duration_hours, description, price, start_times_json) VALUES (?, ?, ?, ?, ?)');
-  insert.run('Sunrise Bass Run', 4, 'Perfect for early risers chasing feeding patterns close to shore.', 450, JSON.stringify(['05:30', '06:30', '07:30']));
-  insert.run('Full-Day Trophy Hunt', 6, 'A deep-water adventure targeting trophy fish with advanced gear.', 700, JSON.stringify(['07:00', '08:00']));
+  insert.run('Full day', 8, 'Full-day guided trip for anglers looking to maximize time on the water.', 500, JSON.stringify(['06:00', '07:00']));
+  insert.run('Half day', 5, 'Shorter guided trip with the same focused coaching and local expertise.', 350, JSON.stringify(['06:00', '12:00']));
+  insert.run('Custom kids trip', 0, 'Kid-focused custom trip. Contact us for timing, length, and details.', 0, JSON.stringify(['08:00']));
 }
 
-setSetting('businessName', "Drake's Charters");
-setSetting('domain', 'drakescharters.com');
-setSetting('phone', '(555) 904-1182');
-setSetting('email', 'hello@drakescharters.com');
+setSetting('businessName', 'S&H Fishing');
+setSetting('domain', 'shfishing.com');
+setSetting('phone', '435-749-9980');
+setSetting('email', 'hello@shfishing.com');
 setSetting('facebook', 'https://facebook.com');
 setSetting('instagram', 'https://instagram.com');
 setSetting('address', 'Lakeview Marina, North Cove');

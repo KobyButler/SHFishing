@@ -93,7 +93,7 @@ app.post('/webhooks/stripe', express.raw({ type: 'application/json' }), async (r
       if (receiptEmail) {
         const amount = payment.amount;
         const currency = payment.currency.toUpperCase();
-        const subject = 'Payment receipt - Drake\'s Charters';
+        const subject = 'Payment receipt - S&H Fishing';
         const text = `Thanks for your payment.\n\nService: ${service?.name || 'Charter'}\nAmount: ${currency} ${amount}\nStatus: ${payment.status}\n\nIf you have questions, contact ${settings.email}.`;
         await sendMail({ to: receiptEmail, subject, text });
       }
@@ -128,7 +128,7 @@ app.post('/webhooks/stripe', express.raw({ type: 'application/json' }), async (r
     const invoice = event.data.object;
     const email = invoice.customer_email;
     if (email) {
-      const subject = 'Invoice paid - Drake\'s Charters';
+      const subject = 'Invoice paid - S&H Fishing';
       const total = (invoice.amount_paid || 0) / 100;
       const currency = (invoice.currency || 'usd').toUpperCase();
       const text = `Your invoice has been paid.\n\nInvoice: ${invoice.number || invoice.id}\nAmount: ${currency} ${total}\n\nThank you for your business.`;
@@ -155,10 +155,10 @@ const upload = multer({
 });
 
 const siteDefaults = () => ({
-  businessName: 'Drake\'s Charters',
-  domain: 'drakescharters.com',
-  phone: '(555) 904-1182',
-  email: 'hello@drakescharters.com',
+  businessName: 'S&H Fishing',
+  domain: 'shfishing.com',
+  phone: '435-749-9980',
+  email: 'hello@shfishing.com',
   facebook: 'https://facebook.com',
   instagram: 'https://instagram.com',
   address: 'Lakeview Marina, North Cove',
@@ -176,8 +176,9 @@ const seedDefaults = () => {
   const serviceCount = db.prepare('SELECT COUNT(*) as count FROM services').get().count;
   if (serviceCount === 0) {
     const insert = db.prepare('INSERT INTO services (name, duration_hours, description, price, start_times_json) VALUES (?, ?, ?, ?, ?)');
-    insert.run('Sunrise Bass Run', 4, 'Perfect for early risers chasing feeding patterns close to shore.', 450, JSON.stringify(['05:30', '06:30', '07:30']));
-    insert.run('Full-Day Trophy Hunt', 6, 'A deep-water adventure targeting trophy fish with advanced gear.', 700, JSON.stringify(['07:00', '08:00']));
+    insert.run('Full day', 8, 'Full-day guided trip for anglers looking to maximize time on the water.', 500, JSON.stringify(['06:00', '07:00']));
+    insert.run('Half day', 5, 'Shorter guided trip with the same focused coaching and local expertise.', 350, JSON.stringify(['06:00', '12:00']));
+    insert.run('Custom kids trip', 0, 'Kid-focused custom trip. Contact us for timing, length, and details.', 0, JSON.stringify(['08:00']));
   }
 
   const defaults = siteDefaults();
@@ -230,12 +231,18 @@ const seedDefaults = () => {
     const insertGallery = db.prepare('INSERT INTO gallery_images (filename, caption, created_at) VALUES (?, ?, ?)');
     const now = new Date().toISOString();
     const samples = [
-      { file: 'gallery-1.svg', caption: 'Sunrise launch with calm water.' },
-      { file: 'gallery-2.svg', caption: 'Cruising toward deep water.' },
-      { file: 'gallery-3.svg', caption: 'A well-timed hook set.' },
-      { file: 'gallery-4.svg', caption: 'Celebrating a solid catch.' },
-      { file: 'gallery-5.svg', caption: 'Rain clouds rolling in.' },
-      { file: 'gallery-6.svg', caption: 'Golden hour on the lake.' }
+      { file: 'sh-fishing-hero.jpg', caption: 'Trophy catch with mountain views.' },
+      { file: 'sh-fishing-guide.jpg', caption: 'Guide highlight from a successful trip.' },
+      { file: 'sh-fishing-catch-01.jpg', caption: 'Calm water and a great lake trout.' },
+      { file: 'sh-fishing-catch-02.jpg', caption: 'Bluebird skies and a quality fish.' },
+      { file: 'sh-fishing-catch-03.jpg', caption: 'Cold weather, big fish, big smiles.' },
+      { file: 'sh-fishing-catch-04.jpg', caption: 'Heavy fish landed in windy conditions.' },
+      { file: 'sh-fishing-catch-05.jpg', caption: 'Sunny day trophy with clear water.' },
+      { file: 'sh-fishing-catch-06.jpg', caption: 'Catching silver in the midday sun.' },
+      { file: 'sh-fishing-catch-07.jpg', caption: 'A full cleaning table after a great day.' },
+      { file: 'sh-fishing-kids-trip.jpg', caption: 'Custom kids trip success story.' },
+      { file: 'sh-fishing-catch-08.jpg', caption: 'Another big fish brought to the boat.' },
+      { file: 'sh-fishing-catch-09.jpg', caption: 'Golden light and a healthy catch.' }
     ];
     for (const sample of samples) {
       insertGallery.run(sample.file, sample.caption, now);
@@ -338,12 +345,12 @@ const getBlocksForMonth = (serviceId, month) => {
 
 app.get('/', (req, res) => {
   withMeta(res, {
-    title: 'Drake\'s Charters | Guided Fishing Trips on the Lake',
-    description: 'Book a guided fishing charter with Drake\'s Charters. Personalized trips, modern gear, and unforgettable catches.'
+    title: 'S&H Fishing | Guided Fishing Trips on the Lake',
+    description: 'Book a guided fishing charter with S&H Fishing. Personalized trips, modern gear, and unforgettable catches.'
   });
   const testimonials = [
     {
-      quote: 'Best morning on the water I have had in years. Drake knew exactly where the fish were holding.',
+      quote: 'Best morning on the water I have had in years. The guide knew exactly where the fish were holding.',
       name: 'Mia K.'
     },
     {
@@ -361,7 +368,7 @@ app.get('/', (req, res) => {
 
 app.get('/gallery', (req, res) => {
   withMeta(res, {
-    title: 'Gallery | Drake\'s Charters',
+    title: 'Gallery | S&H Fishing',
     description: 'Explore our bragging wall of recent catches and charter memories.'
   });
   res.render('gallery', { images: getGalleryImages() });
@@ -369,8 +376,8 @@ app.get('/gallery', (req, res) => {
 
 app.get('/book', (req, res) => {
   withMeta(res, {
-    title: 'Book Your Trip | Drake\'s Charters',
-    description: 'Choose a charter package and request availability with Drake\'s Charters.'
+    title: 'Book Your Trip | S&H Fishing',
+    description: 'Choose a charter package and request availability with S&H Fishing.'
   });
   res.render('book', { services: getServices() });
 });
@@ -431,7 +438,7 @@ app.post('/book/:id/request', async (req, res) => {
 
   const ownerEmail = res.locals.settings.email;
   const adminMessage = `New booking request (#${bookingId}) for ${service.name}.\n\nDate: ${date}\nTime: ${time}\nGuests: ${guests}\nName: ${name}\nEmail: ${email}\nPhone: ${phone}\nNotes: ${notes || 'None'}\n\nLog in to confirm or propose a new time.`;
-  const customerMessage = `Hi ${name},\n\nThanks for requesting a trip with Drake\'s Charters. We received your request for ${service.name} on ${date} at ${time}. Our team will review availability and reply shortly.\n\nIf you need to make changes, reply to this email or call ${res.locals.settings.phone}.\n\nTight lines,\nDrake\'s Charters`;
+  const customerMessage = `Hi ${name},\n\nThanks for requesting a trip with S&H Fishing. We received your request for ${service.name} on ${date} at ${time}. Our team will review availability and reply shortly.\n\nIf you need to make changes, reply to this email or call ${res.locals.settings.phone}.\n\nTight lines,\nS&H Fishing`;
 
   await sendMail({
     to: ownerEmail,
@@ -488,7 +495,7 @@ app.post('/contact', async (req, res) => {
 
   await sendMail({
     to: ownerEmail,
-    subject: 'New message from Drake\'s Charters website',
+    subject: 'New message from S&H Fishing website',
     text: adminMessage
   });
 
@@ -497,31 +504,31 @@ app.post('/contact', async (req, res) => {
 
 app.get('/policies/refund', (req, res) => {
   withMeta(res, {
-    title: 'Refund Policy | Drake\'s Charters',
-    description: 'Read Drake\'s Charters cancellation and refund policies.'
+    title: 'Refund Policy | S&H Fishing',
+    description: 'Read S&H Fishing cancellation and refund policies.'
   });
   res.render('policy-refund');
 });
 
 app.get('/policies/privacy', (req, res) => {
   withMeta(res, {
-    title: 'Privacy Policy | Drake\'s Charters',
-    description: 'Learn how Drake\'s Charters collects and uses personal information.'
+    title: 'Privacy Policy | S&H Fishing',
+    description: 'Learn how S&H Fishing collects and uses personal information.'
   });
   res.render('policy-privacy');
 });
 
 app.get('/policies/terms', (req, res) => {
   withMeta(res, {
-    title: 'Terms & Conditions | Drake\'s Charters',
-    description: 'Review the terms and conditions for booking a trip with Drake\'s Charters.'
+    title: 'Terms & Conditions | S&H Fishing',
+    description: 'Review the terms and conditions for booking a trip with S&H Fishing.'
   });
   res.render('policy-terms');
 });
 
 app.get('/know-before-you-go', (req, res) => {
   withMeta(res, {
-    title: 'Know Before You Go | Drake\'s Charters',
+    title: 'Know Before You Go | S&H Fishing',
     description: 'Everything you need to prepare for your charter.'
   });
   res.render('know-before');
@@ -529,7 +536,7 @@ app.get('/know-before-you-go', (req, res) => {
 
 app.get('/places', (req, res) => {
   withMeta(res, {
-    title: 'Places to Stay and Eat | Drake\'s Charters',
+    title: 'Places to Stay and Eat | S&H Fishing',
     description: 'Local lodging, dining, and camping recommendations near the marina.'
   });
   const lodgingList = JSON.parse(res.locals.settings.lodgingList || '[]');
@@ -543,7 +550,7 @@ app.get('/member/login', (req, res) => {
     return res.redirect('/member');
   }
   withMeta(res, {
-    title: 'Member Access | Drake\'s Charters',
+    title: 'Member Access | S&H Fishing',
     description: 'Sign up or log in to manage your trips and booking history.'
   });
   res.render('member-login', { authEnabled: supabaseConfigured });
@@ -556,7 +563,7 @@ app.get('/member/logout', (req, res) => {
 
 app.get('/member', requireMember, (req, res) => {
   withMeta(res, {
-    title: 'Member Dashboard | Drake\'s Charters',
+    title: 'Member Dashboard | S&H Fishing',
     description: 'Manage saved trips, booking history, and account details.'
   });
   const member = getMemberById(req.session.member.id);
@@ -992,7 +999,7 @@ app.post('/admin/bookings/:id/update', requireAdmin, async (req, res) => {
   `).run(status, adminNotes, proposedDate, proposedTime, req.params.id);
 
   if (notify) {
-    const message = `Hi ${booking.name},\n\nYour booking request (#${booking.id}) has been updated.\n\nStatus: ${status}\n${proposedDate && proposedTime ? `Proposed time: ${proposedDate} at ${proposedTime}\n` : ''}${adminNotes ? `Notes: ${adminNotes}\n` : ''}\nIf you have questions, reply to this email or call ${res.locals.settings.phone}.\n\nDrake\'s Charters`;
+    const message = `Hi ${booking.name},\n\nYour booking request (#${booking.id}) has been updated.\n\nStatus: ${status}\n${proposedDate && proposedTime ? `Proposed time: ${proposedDate} at ${proposedTime}\n` : ''}${adminNotes ? `Notes: ${adminNotes}\n` : ''}\nIf you have questions, reply to this email or call ${res.locals.settings.phone}.\n\nS&H Fishing`;
     await sendMail({
       to: booking.email,
       subject: `Booking update for request #${booking.id}`,
@@ -1137,5 +1144,6 @@ app.use((req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`Drake\'s Charters running at http://localhost:${PORT}`);
+  console.log(`S&H Fishing running at http://localhost:${PORT}`);
 });
+
