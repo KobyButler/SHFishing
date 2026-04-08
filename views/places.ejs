@@ -7,40 +7,21 @@
     <h1>Places to Stay and Eat</h1>
     <p class="lead">Local favorites near the marina to make trip planning easy.</p>
 
-    <div class="card-grid">
-      <div class="card">
-        <h3>Places to Stay</h3>
-        <div class="place-list">
-          <% lodgingList.forEach((place) => { %>
-            <article class="place-item">
-              <strong><%= place.name %></strong>
-              <p><%= place.description %></p>
-              <% if (place.url) { %>
-                <a class="button secondary" href="<%= place.url %>" target="_blank" rel="noopener">Go to Site</a>
-              <% } %>
-            </article>
-          <% }) %>
-          <% if (lodgingList.length === 0) { %>
-            <p>Lodging recommendations coming soon.</p>
-          <% } %>
-        </div>
-      </div>
-      <div class="card">
-        <h3>Places to Eat</h3>
-        <div class="place-list">
-          <% foodList.forEach((place) => { %>
-            <article class="place-item">
-              <strong><%= place.name %></strong>
-              <p><%= place.description %></p>
-              <% if (place.url) { %>
-                <a class="button secondary" href="<%= place.url %>" target="_blank" rel="noopener">Go to Site</a>
-              <% } %>
-            </article>
-          <% }) %>
-          <% if (foodList.length === 0) { %>
-            <p>Restaurant recommendations coming soon.</p>
-          <% } %>
-        </div>
+    <div class="card">
+      <h3>Places to Stay</h3>
+      <div class="place-list">
+        <% lodgingList.forEach((place) => { %>
+          <article class="place-item">
+            <strong><%= place.name %></strong>
+            <p><%= place.description %></p>
+            <% if (place.url) { %>
+              <a class="button secondary" href="<%= place.url %>" target="_blank" rel="noopener">Go to Site</a>
+            <% } %>
+          </article>
+        <% }) %>
+        <% if (lodgingList.length === 0) { %>
+          <p>Lodging recommendations coming soon.</p>
+        <% } %>
       </div>
     </div>
 
