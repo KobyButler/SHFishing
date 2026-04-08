@@ -12,10 +12,12 @@ import Stripe from 'stripe';
 
 import { init, getSetting, setSetting, ensureUploads, prepare } from './db.js';
 import { sendMail } from './email.js';
+import { generateICS, googleCalendarUrl, outlookCalendarUrl } from './calendar.js';
 
 dotenv.config();
 
 const app = express();
+if (process.env.NODE_ENV === 'production') app.set('trust proxy', 1);
 const PORT = process.env.PORT || 3000;
 const supabaseUrl = process.env.SUPABASE_URL || '';
 const supabaseAnonKey = process.env.SUPABASE_ANON_KEY || '';
@@ -147,11 +149,31 @@ app.use(session({
   secret: process.env.SESSION_SECRET || 'dev-secret-change-me',
   resave: false,
   saveUninitialized: false,
-  cookie: { maxAge: 1000 * 60 * 60 * 8 }
+  cookie: { maxAge: 1000 * 60 * 60 * 8, secure: process.env.NODE_ENV === 'production' }
 }));
 
+const galleryStorage = multer.diskStorage({
+  destination: path.join(process.cwd(), 'public', 'uploads', 'gallery'),
+  filename: (req, file, cb) => {
+    const ext = path.extname(file.originalname).toLowerCase() || '.jpg';
+    const uniqueName = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}${ext}`;
+    cb(null, uniqueName);
+  }
+});
+
+const imageFileFilter = (req, file, cb) => {
+  const allowed = /\.(jpg|jpeg|png|gif|webp)$/i;
+  if (allowed.test(path.extname(file.originalname))) {
+    cb(null, true);
+  } else {
+    cb(new Error('Only image files (jpg, png, gif, webp) are allowed.'));
+  }
+};
+
 const upload = multer({
-  dest: path.join(process.cwd(), 'public', 'uploads', 'gallery')
+  storage: galleryStorage,
+  fileFilter: imageFileFilter,
+  limits: { fileSize: 10 * 1024 * 1024 }
 });
 
 const siteDefaults = () => ({
@@ -290,6 +312,31 @@ const seedDefaults = () => {
 seedDefaults();
 
 const sanitize = (input) => sanitizeHtml(input || '', { allowedTags: [], allowedAttributes: {} }).trim();
+
+const rateLimitStore = new Map();
+const rateLimit = (windowMs = 60000, maxRequests = 5) => {
+  return (req, res, next) => {
+    const ip = req.ip || req.connection.remoteAddress;
+    const now = Date.now();
+    const entry = rateLimitStore.get(ip);
+    if (!entry || now - entry.start > windowMs) {
+      rateLimitStore.set(ip, { start: now, count: 1 });
+      return next();
+    }
+    entry.count += 1;
+    if (entry.count > maxRequests) {
+      return res.status(429).send('Too many requests. Please wait a moment and try again.');
+    }
+    return next();
+  };
+};
+
+setInterval(() => {
+  const now = Date.now();
+  for (const [ip, entry] of rateLimitStore) {
+    if (now - entry.start > 120000) rateLimitStore.delete(ip);
+  }
+}, 60000);
 
 const getSettings = () => {
   const defaults = siteDefaults();
@@ -431,7 +478,7 @@ app.get('/book/:id', (req, res) => {
   res.render('schedule', { service });
 });
 
-app.post('/book/:id/request', async (req, res) => {
+app.post('/book/:id/request', rateLimit(60000, 5), async (req, res) => {
   const service = getService(req.params.id);
   if (!service) {
     return res.status(404).send('Service not found');
@@ -474,23 +521,54 @@ app.post('/book/:id/request', async (req, res) => {
   const bookingId = info.lastInsertRowid;
 
   const ownerEmail = res.locals.settings.email;
-  const adminMessage = `New booking request (#${bookingId}) for ${service.name}.\n\nDate: ${date}\nTime: ${time}\nGuests: ${guests}\nName: ${name}\nEmail: ${email}\nPhone: ${phone}\nNotes: ${notes || 'None'}\n\nLog in to confirm or propose a new time.`;
-  const customerMessage = `Hi ${name},\n\nThanks for requesting a trip with S&H Fishing. We received your request for ${service.name} on ${date} at ${time}. Our team will review availability and reply shortly.\n\nIf you need to make changes, reply to this email or call ${res.locals.settings.phone}.\n\nTight lines,\nS&H Fishing`;
+  const durationHours = service.duration_hours || 4;
+  const calendarEvent = {
+    summary: `S&H Fishing - ${service.name} (#${bookingId})`,
+    description: `Booking #${bookingId}\nGuest: ${name}\nEmail: ${email}\nPhone: ${phone}\nGuests: ${guests}\nNotes: ${notes || 'None'}`,
+    location: res.locals.settings.address || '',
+    date,
+    time,
+    durationHours,
+    organizerEmail: ownerEmail,
+    organizerName: res.locals.settings.businessName || 'S&H Fishing',
+    attendeeEmail: email,
+    attendeeName: name,
+    uid: bookingId
+  };
+
+  const icsContent = generateICS(calendarEvent);
+  const icsBuffer = Buffer.from(icsContent, 'utf-8');
+
+  const adminMessage = `New booking request (#${bookingId}) for ${service.name}.\n\nDate: ${date}\nTime: ${time}\nGuests: ${guests}\nName: ${name}\nEmail: ${email}\nPhone: ${phone}\nNotes: ${notes || 'None'}\n\nLog in to confirm or propose a new time.\n\nA calendar invite (.ics) is attached to this email.`;
+  const customerMessage = `Hi ${name},\n\nThanks for requesting a trip with S&H Fishing. We received your request for ${service.name} on ${date} at ${time}. Our team will review availability and reply shortly.\n\nA calendar invite is attached so you can save this trip to your calendar.\n\nIf you need to make changes, reply to this email or call ${res.locals.settings.phone}.\n\nTight lines,\nS&H Fishing`;
+
+  const icsAttachment = {
+    filename: `shfishing-booking-${bookingId}.ics`,
+    content: icsBuffer,
+    contentType: 'text/calendar; method=REQUEST'
+  };
 
   await sendMail({
     to: ownerEmail,
     subject: `New booking request #${bookingId} - ${service.name}`,
-    text: adminMessage
+    text: adminMessage,
+    attachments: [icsAttachment]
   });
 
   await sendMail({
     to: email,
     subject: 'We received your booking request',
-    text: customerMessage
+    text: customerMessage,
+    attachments: [icsAttachment]
   });
 
   const booking = db.prepare('SELECT * FROM bookings WHERE id = ?').get(bookingId);
-  res.render('booking-confirm', { service, bookingId, booking, spam: false });
+  const calendarLinks = {
+    google: googleCalendarUrl(calendarEvent),
+    outlook: outlookCalendarUrl(calendarEvent),
+    icsDownload: `/api/booking/${bookingId}/calendar`
+  };
+  res.render('booking-confirm', { service, bookingId, booking, spam: false, calendarLinks });
 });
 
 app.get('/api/availability', (req, res) => {
@@ -509,7 +587,35 @@ app.get('/api/availability', (req, res) => {
   });
 });
 
-app.post('/contact', async (req, res) => {
+app.get('/api/booking/:id/calendar', (req, res) => {
+  const booking = db.prepare('SELECT * FROM bookings WHERE id = ?').get(req.params.id);
+  if (!booking) {
+    return res.status(404).send('Booking not found');
+  }
+  const service = getService(booking.service_id);
+  if (!service) {
+    return res.status(404).send('Service not found');
+  }
+  const settings = getSettings();
+  const icsContent = generateICS({
+    summary: `S&H Fishing - ${service.name} (#${booking.id})`,
+    description: `Booking #${booking.id}\nGuest: ${booking.name}\nGuests: ${booking.guests}\nNotes: ${booking.notes || 'None'}`,
+    location: settings.address || '',
+    date: booking.date,
+    time: booking.time,
+    durationHours: service.duration_hours || 4,
+    organizerEmail: settings.email,
+    organizerName: settings.businessName || 'S&H Fishing',
+    attendeeEmail: booking.email,
+    attendeeName: booking.name,
+    uid: booking.id
+  });
+  res.setHeader('Content-Type', 'text/calendar; charset=utf-8');
+  res.setHeader('Content-Disposition', `attachment; filename="shfishing-booking-${booking.id}.ics"`);
+  res.send(icsContent);
+});
+
+app.post('/contact', rateLimit(60000, 5), async (req, res) => {
   if (req.body.csrf !== req.session.csrf) {
     return res.status(400).send('Invalid session token');
   }
@@ -576,8 +682,10 @@ app.get('/places', (req, res) => {
     title: 'Places to Stay and Eat | S&H Fishing',
     description: 'Local lodging and dining recommendations near the marina.'
   });
+  const lodgingList = JSON.parse(res.locals.settings.lodgingList || '[]');
   const foodList = JSON.parse(res.locals.settings.foodList || '[]');
-  res.render('places', { foodList });
+  const campingList = JSON.parse(res.locals.settings.campingList || '[]');
+  res.render('places', { lodgingList, foodList, campingList });
 });
 
 app.get('/member/login', (req, res) => {

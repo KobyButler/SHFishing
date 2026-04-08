@@ -4,26 +4,32 @@
 <section class="hero">
   <div class="container">
     <div class="hero-card">
-      <p class="section-kicker hero-kicker">Guided Trips on Fish Lake</p>
-      <h1>Plan your perfect day on the water with S&amp;H Fishing.</h1>
-      <p>From trophy lake trout to first-time family catches, we run organized, safe, and fun guided trips built around your goals.</p>
-      <div class="hero-tags" aria-label="Trip highlights">
-        <span class="hero-tag">Species-focused trips</span>
-        <span class="hero-tag">Family-friendly guidance</span>
-        <span class="hero-tag">Local water knowledge</span>
+      <div class="hero-content">
+        <p class="section-kicker hero-kicker">Guided Trips on Fish Lake</p>
+        <h1>Plan your perfect day on the water with S&amp;H Fishing.</h1>
+        <p>From trophy lake trout to first-time family catches, we run organized, safe, and fun guided trips built around your goals.</p>
+        <div class="hero-actions">
+          <a class="button" href="/book">Book Your Trip</a>
+          <a class="button secondary" href="#target-species">View Target Species</a>
+        </div>
       </div>
-      <div class="hero-actions">
-        <a class="button" href="/book">Book Your Trip</a>
-        <a class="button secondary" href="#target-species">View Target Species</a>
-      </div>
+      <aside class="hero-summary" aria-label="Trip highlights">
+        <p class="hero-summary-title">Trip Highlights</p>
+        <div class="hero-tags">
+          <span class="hero-tag">Species-focused trips</span>
+          <span class="hero-tag">Family-friendly guidance</span>
+          <span class="hero-tag">Local water knowledge</span>
+        </div>
+        <p class="hero-summary-note">Choose your target species and we build the day around your goals from launch to final cast.</p>
+      </aside>
     </div>
   </div>
 </section>
 
 <section class="section">
   <div class="container">
-    <p class="section-kicker">Why Anglers Book With Us</p>
-    <h2>About Us</h2>
+    <p class="section-kicker">Why Fish With Us</p>
+    <h2>Built for Anglers, by Anglers</h2>
     <p class="lead">S&amp;H Fishing is a locally owned charter service built for anglers who want an organized, relaxed, and high-performing day on the water. From first-timers to experienced fishermen, we tailor each trip to your goals and target species: Lake trout, Splake, Kokanee, and Yellow perch.</p>
   </div>
 </section>
@@ -35,23 +41,23 @@
     <p class="lead">Trips are built around your preferred target species and current conditions so your day has a clear game plan from the start.</p>
     <div class="card-grid species-grid">
       <article class="card species-card">
-        <h3>Lake Trout</h3>
         <img class="species-photo" src="/uploads/species/lake-trout.jpg" alt="Lake trout in clear water" loading="lazy" />
+        <h3>Lake Trout</h3>
         <p>Primary target for anglers chasing bigger fish and deep-water structure.</p>
       </article>
       <article class="card species-card">
-        <h3>Splake</h3>
         <img class="species-photo" src="/uploads/species/splake.jpg" alt="Splake near shoreline rocks" loading="lazy" />
+        <h3>Splake</h3>
         <p>Great option for mixed-action days and strong cold-water fights.</p>
       </article>
       <article class="card species-card">
-        <h3>Kokanee</h3>
         <img class="species-photo" src="/uploads/species/kokanee.jpg" alt="Kokanee salmon profile" loading="lazy" />
+        <h3>Kokanee</h3>
         <p>Fast-paced action and a favorite for anglers looking for steady bites.</p>
       </article>
       <article class="card species-card">
-        <h3>Yellow Perch</h3>
         <img class="species-photo" src="/uploads/species/yellow-perch.jpg" alt="Yellow perch with striped body" loading="lazy" />
+        <h3>Yellow Perch</h3>
         <p>Fun for groups and families with consistent action in the right windows.</p>
       </article>
     </div>
@@ -66,19 +72,8 @@
 </section>
 
 <section class="section">
-  <div class="container guide">
-    <div class="guide-photo">
-      <img src="/uploads/gallery/sh-fishing-guide.jpg" alt="S&H Fishing guide with a catch" loading="lazy" />
-    </div>
-    <div>
-      <h2>About Your Guide</h2>
-      <p>Captain Drake Hoffman is a lifelong angler with years of local guiding experience. Expect clear coaching, patient instruction, and a trip that feels both adventurous and professional.</p>
-    </div>
-  </div>
-</section>
-
-<section class="section">
   <div class="container">
+    <p class="section-kicker">Testimonials</p>
     <h2>Our Clients Say</h2>
     <div class="carousel" data-carousel>
       <div class="carousel-track">
@@ -99,6 +94,7 @@
 
 <section class="section">
   <div class="container">
+    <p class="section-kicker">Recent Catches</p>
     <h2>Trip Highlights</h2>
     <div class="gallery-grid">
       <% if (highlights.length === 0) { %>
@@ -118,14 +114,15 @@
 
 <section class="section" id="contact">
   <div class="container">
+    <p class="section-kicker">Get Started</p>
     <h2>Get in Touch</h2>
     <p class="lead">Call anytime and we will help you plan the right trip fast.</p>
     <div class="card-grid">
       <div class="card">
-        <h3>Contact</h3>
-        <p><strong>Name:</strong> Drake Hoffman</p>
-        <p><strong>Phone:</strong> <%= settings.phone %></p>
-        <h3>Offered Services</h3>
+        <h3>Contact Info</h3>
+        <p><strong>Guide:</strong> Drake Hoffman</p>
+        <p><strong>Phone:</strong> <a href="tel:<%= settings.phone %>"><%= settings.phone %></a></p>
+        <h3 style="margin-top: 24px;">Offered Services</h3>
         <ul class="service-offers">
           <li>Full day $500 (8hrs)</li>
           <li>Half day $350 (5hrs)</li>

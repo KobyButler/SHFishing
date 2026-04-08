@@ -25,13 +25,13 @@
     <% } %>
     <div class="card-grid">
       <div class="calendar" data-calendar data-service-id="<%= service.id %>">
-        <div style="display:flex; justify-content:space-between; align-items:center; gap:12px;">
+        <div class="calendar-header">
           <button class="button secondary" type="button" data-prev-month>Previous</button>
           <strong data-month-label></strong>
           <button class="button secondary" type="button" data-next-month>Next</button>
         </div>
         <div class="calendar-grid"></div>
-        <div style="margin-top:16px;">
+        <div style="margin-top: 16px;">
           <strong>Available start times</strong>
           <div class="timeslot-list" data-timeslots></div>
         </div>

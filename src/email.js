@@ -16,7 +16,7 @@ const createTransporter = () => {
   });
 };
 
-const sendMail = async ({ to, subject, text, html }) => {
+const sendMail = async ({ to, subject, text, html, attachments }) => {
   const transporter = createTransporter();
   if (!transporter) {
     console.log('[email] Missing SMTP config. Email skipped:', { to, subject });
@@ -28,7 +28,8 @@ const sendMail = async ({ to, subject, text, html }) => {
       to,
       subject,
       text,
-      html
+      html,
+      attachments
     });
   } catch (error) {
     console.log('[email] Send failed. Check SMTP settings.', error?.message || error);

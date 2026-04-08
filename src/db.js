@@ -50,6 +50,10 @@ const prepare = (sql) => ({
 });
 
 const init = async () => {
+  const dbDir = path.dirname(dbPath);
+  if (!fs.existsSync(dbDir)) {
+    fs.mkdirSync(dbDir, { recursive: true });
+  }
   const SQL = await loadSqlJs();
   if (fs.existsSync(dbPath)) {
     const fileBuffer = fs.readFileSync(dbPath);
@@ -176,9 +180,15 @@ const setSetting = (key, value) => {
 };
 
 const ensureUploads = () => {
-  const dir = path.join(process.cwd(), 'public', 'uploads', 'gallery');
-  if (!fs.existsSync(dir)) {
-    fs.mkdirSync(dir, { recursive: true });
+  const dirs = [
+    path.join(process.cwd(), 'public', 'uploads', 'gallery'),
+    path.join(process.cwd(), 'public', 'uploads', 'logo'),
+    path.join(process.cwd(), 'public', 'uploads', 'species')
+  ];
+  for (const dir of dirs) {
+    if (!fs.existsSync(dir)) {
+      fs.mkdirSync(dir, { recursive: true });
+    }
   }
 };
 

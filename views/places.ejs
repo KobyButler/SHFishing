@@ -11,16 +11,18 @@
       <div class="card">
         <h3>Places to Stay</h3>
         <div class="place-list">
-          <article class="place-item">
-            <strong>Bowery Haven</strong>
-            <p>Lakeside cabins and accommodations close to Fish Lake launch points.</p>
-            <a class="button secondary" href="https://boweryhaven.com/" target="_blank" rel="noopener">Go to Site</a>
-          </article>
-          <article class="place-item">
-            <strong>Lakeside Resort</strong>
-            <p>Comfortable resort stay with quick access to the water and local amenities.</p>
-            <a class="button secondary" href="https://www.fishlakeresorts.com" target="_blank" rel="noopener">Go to Site</a>
-          </article>
+          <% lodgingList.forEach((place) => { %>
+            <article class="place-item">
+              <strong><%= place.name %></strong>
+              <p><%= place.description %></p>
+              <% if (place.url) { %>
+                <a class="button secondary" href="<%= place.url %>" target="_blank" rel="noopener">Go to Site</a>
+              <% } %>
+            </article>
+          <% }) %>
+          <% if (lodgingList.length === 0) { %>
+            <p>Lodging recommendations coming soon.</p>
+          <% } %>
         </div>
       </div>
       <div class="card">
@@ -30,12 +32,28 @@
             <article class="place-item">
               <strong><%= place.name %></strong>
               <p><%= place.description %></p>
-              <a class="button secondary" href="<%= place.url %>" target="_blank" rel="noopener">Go to Site</a>
+              <% if (place.url) { %>
+                <a class="button secondary" href="<%= place.url %>" target="_blank" rel="noopener">Go to Site</a>
+              <% } %>
             </article>
           <% }) %>
+          <% if (foodList.length === 0) { %>
+            <p>Restaurant recommendations coming soon.</p>
+          <% } %>
         </div>
       </div>
     </div>
+
+    <% if (campingList.length > 0) { %>
+      <div class="card" style="margin-top: var(--space-6);">
+        <h3>Camping Near the Lake</h3>
+        <ul>
+          <% campingList.forEach((spot) => { %>
+            <li><%= spot %></li>
+          <% }) %>
+        </ul>
+      </div>
+    <% } %>
   </div>
 </section>
 
