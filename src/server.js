@@ -182,7 +182,7 @@ const siteDefaults = () => ({
   phone: '435-749-9980',
   email: 'hello@shfishing.com',
   facebook: 'https://facebook.com',
-  instagram: 'https://instagram.com',
+  instagram: 'https://www.instagram.com/s_hfishing?igsh=MXI0bW0wdTZ6dXNmOQ==',
   address: 'Lakeview Marina, North Cove',
   licenseUrl: 'https://example.com/fishing-license',
   policyEffectiveDate: 'January 30, 2026',
@@ -436,10 +436,6 @@ app.get('/', (req, res) => {
     {
       quote: 'Best morning on the water I have had in years. The guide knew exactly where the fish were holding.',
       name: 'Mia K.'
-    },
-    {
-      quote: 'Our family trip was smooth, safe, and so much fun. We landed our first bass in under 10 minutes.',
-      name: 'Marcus T.'
     },
     {
       quote: 'Clear instructions, great gear, and a guide who loves teaching. Worth every penny.',
