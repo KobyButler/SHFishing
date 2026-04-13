@@ -311,7 +311,10 @@ const seedDefaults = () => {
 
 seedDefaults();
 
-const sanitize = (input) => sanitizeHtml(input || '', { allowedTags: [], allowedAttributes: {} }).trim();
+const sanitize = (input) => {
+  const cleaned = sanitizeHtml(input || '', { allowedTags: [], allowedAttributes: {} }).trim();
+  return cleaned.replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&#39;/g, "'");
+};
 
 const rateLimitStore = new Map();
 const rateLimit = (windowMs = 60000, maxRequests = 5) => {
