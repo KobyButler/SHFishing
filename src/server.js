@@ -180,7 +180,7 @@ const siteDefaults = () => ({
   businessName: 'S&H Fishing',
   domain: 'shfishing.com',
   phone: '435-749-9980',
-  email: 'hello@shfishing.com',
+  email: 'dhoffman385@gmail.com',
   facebook: 'https://facebook.com',
   instagram: 'https://www.instagram.com/s_hfishing?igsh=MXI0bW0wdTZ6dXNmOQ==',
   address: 'Lakeview Marina, North Cove',

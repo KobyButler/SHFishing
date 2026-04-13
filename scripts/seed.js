@@ -13,7 +13,7 @@ if (services === 0) {
 setSetting('businessName', 'S&H Fishing');
 setSetting('domain', 'shfishing.com');
 setSetting('phone', '435-749-9980');
-setSetting('email', 'hello@shfishing.com');
+setSetting('email', 'dhoffman385@gmail.com');
 setSetting('facebook', 'https://facebook.com');
 setSetting('instagram', 'https://instagram.com');
 setSetting('address', 'Lakeview Marina, North Cove');
